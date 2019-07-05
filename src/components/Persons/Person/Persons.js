@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Person from './Person'
 
+
 class Persons extends Component {
   // static getDerivedStateFromProps(props, state){
   //   console.log('[Persons.js] getDerivedStateFromProps');
@@ -8,14 +9,22 @@ class Persons extends Component {
   // }
 
   shouldComponentUpdate(nextProps, nextState){
-    console.log("[Persons.js] shouldComponentUpdate")
-    return true
+    console.log("[Persons.js] shouldComponentUpdate");
+    if (nextProps.persons !== this.props.persons ||
+        nextProps.changed !== this.props.changed ||
+        nextProps.clicked !== this.props.clicked ||
+        nextProps.isAuthenticated !== this.props.isAuthenticated
+        ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState){
-    console.log("[Persons.js] getSnapshotBeforeUpdate");
-    return {message: "Snapshot!"};
-  }
+  // getSnapshotBeforeUpdate(prevProps, prevState){
+  //   console.log("[Persons.js] getSnapshotBeforeUpdate");
+  //   return {message: "Snapshot!"};
+  // }
 
   componentDidUpdate(prevProps, preState, snapshot){
     console.log("[Persons.js] componentDidUpdate")
@@ -36,6 +45,7 @@ class Persons extends Component {
         changed = {(event) => this.props.changed(event, person.id)}
         name={person.name}
         age={person.age} 
+        isAuth={this.props.isAuthenticated}
         />
       ); 
     });
